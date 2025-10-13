@@ -6,6 +6,8 @@ use App\Http\Requests\StoreKlachtRequest;
 use App\Http\Requests\UpdateKlachtRequest;
 use App\Models\Klacht;
 
+require_once "../Models/klacht.php";
+
 class KlachtController extends Controller
 {
     /**
@@ -30,7 +32,21 @@ class KlachtController extends Controller
      */
     public function store(StoreKlachtRequest $request)
     {
-        //
+            if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                $name = $_POST['Naam'];
+                $email = $_POST['Email'];
+                $phone = $_POST['Phone'];
+                $complaint = $_POST['klacht'];
+                $typeComplaint = $_POST['type_klacht'];
+
+                melder::initializeDatabase();
+                melder::throwInDB($name, $email, $phone); // putting the user in the database
+
+                $complainerID = melder::getComplainerID(); // getting the ID that is generated for the complainer
+
+                klacht::initializeDatabase();
+                klacht::throwInDB($complainerID, $complaint, $typeComplaint); // putting the complaint in the database
+            }
     }
 
     /**
