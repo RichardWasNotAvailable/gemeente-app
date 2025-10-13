@@ -7,7 +7,12 @@
 <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 </head>
 <body>
-
+<nav class="topBar">
+<li>
+    <a href="/">Home</a>
+    <a href="/klacht">Klachtenformulier</a>
+</li>
+</nav>
     <nav class="formBody">
     <form action="">
             <label for="email-adres">E-mail:</label><br>
@@ -26,7 +31,7 @@
                 </select><br><br>
                 <label  for="Klacht" required>Uw klacht:</label><br>
                  <textarea rows="4" cols="50">
-</textarea><br><br>
+                </textarea><br><br>
 <input class="verzendknop" type="submit" value="Klacht Verzenden">
 
 
