@@ -1,0 +1,11 @@
+.verzendknop{
+    border-radius: 1rem;
+    background-color: navy;
+    color: antiquewhite;
+}
+
+input, select, textarea{
+    border-radius: 1rem;
+max-width: 30%;
+    max-height: 30%;
+}

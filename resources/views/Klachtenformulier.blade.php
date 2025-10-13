@@ -4,28 +4,30 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Klachtenpagina</title>
+<link rel="stylesheet" href="{{ asset('css/style.css') }}">
 </head>
 <body>
 
     <nav class="formBody">
-
-        <form action="">
+    <form action="">
             <label for="email-adres">E-mail:</label><br>
-            <input type="email" id="email-adres" name="email-adres"><br><br>
+            <input type="email" id="email-adres" name="email-adres" required><br><br>
             <label for="Naam">Naam:</label><br>
-            <input type="text" id="name" name="name"><br><br>
-            <label for="type_klacht">Type Klacht:</label><br>
-            <input type="radio" id="Klacht_vuil" name="Klacht_vuil" value="Zwerfafval">
-            <label for="klacht_vuil">Zwerfafval</label><br>
-            <input type="radio" id="Klacht_dood_dier" name="Klacht_dood_dier" value="Dood dier">
-            <label for="Klacht_dood_dier">Dood dier</label><br>
-            <input type="radio" id="Klacht_Kapot_Stoplicht" name="Klacht_Kapot_Stoplicht" value="Kapot Stoplicht">
-            <label for="Klacht_Kapot_Stoplicht">Kapot Stoplicht</label><br>
-            <input type="radio" id="Klacht_overig" name="Klacht_overig" value="Overig">
-            <label for="klacht_overig">Overig</label><br><br>
-            <label for="Klacht">Uw klacht:</label><br>
-            <input type="text" id="klacht" name="klacht"><br>
-            <br><input type="submit" value="Klacht Verzenden">
+            <input type="text" id="name" name="name" required><br><br>
+            <label for="Telefoonnummer">Telefoonnummer:</label><br>
+            <input  type="tel" name="Telefoonummer" id="Telefoonnummer" pattern="[0-9]{10}" required><br><br>
+             <label for="klacht" required>Type Klacht:</label><br>
+             <select name="klacht" id="klacht">
+                <option value="KiesKlacht" selected>-Kies uw klacht-</option>
+                <option value="Zwerfafval">Zwerfafval</option>
+                <option value="Dood_Dier">Dood dier</option>
+                <option value="Kapot_Stoplicht">Kapot Stoplicht</option>
+                <option value="Overig">Overig</option>
+                </select><br><br>
+                <label  for="Klacht" required>Uw klacht:</label><br>
+                 <textarea rows="4" cols="50">
+</textarea><br><br>
+<input class="verzendknop" type="submit" value="Klacht Verzenden">
 
 
         </form>
