@@ -6,8 +6,6 @@ use App\Http\Requests\StoreKlachtRequest;
 use App\Http\Requests\UpdateKlachtRequest;
 use App\Models\Klacht;
 
-require_once "../Models/klacht.php";
-
 class KlachtController extends Controller
 {
     /**
