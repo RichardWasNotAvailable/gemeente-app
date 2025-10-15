@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function () {
     const map = L.map('map').setView([51.9225, 4.4791], 13); // Default to Rotterdam
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -7,45 +7,51 @@ document.addEventListener("DOMContentLoaded", function() {
     }).addTo(map);
 
     const streetInput = document.getElementById("streetName");
+    let debounceTimer; // To hold the debounce timer
 
-    // Add an event listener to the input field
-    streetInput.addEventListener("input", function() {
+    // Function to fetch location
+    function fetchLocation(streetName) {
+        fetch(`https://nominatim.openstreetmap.org/search?street=${encodeURIComponent(streetName)}&city=Rotterdam&country=Netherlands&format=json`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.length > 0) {
+                    const lat = data[0].lat;
+                    const lon = data[0].lon;
+
+                    // Set map view to the new location
+                    map.setView([lat, lon], 15);
+
+                    // Clear previous markers
+                    if (window.marker) {
+                        map.removeLayer(window.marker);
+                    }
+
+                    // Add a marker for the new location
+                    window.marker = L.marker([lat, lon]).addTo(map)
+                        .bindPopup(`Location: ${data[0].display_name}`)
+                        .openPopup();
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching location:', error);
+                document.getElementById("error-message").innerText = "Error fetching location. Please check your input.";
+            });
+    }
+
+    // Add an event listener to the input field with debounce
+    streetInput.addEventListener("input", function () {
+        clearTimeout(debounceTimer); // Clear previous timer
         const streetName = this.value;
 
-        if (streetName.length > 2) { // Start searching if more than 2 characters
-            // Use Nominatim API to get the coordinates
-            fetch(`https://nominatim.openstreetmap.org/search?street=${encodeURIComponent(streetName)}&city=Rotterdam&format=json`)
-                .then(response => response.json())
-                .then(data => {
-                    if (data.length > 0) {
-                        const lat = data[0].lat;
-                        const lon = data[0].lon;
-
-                        // Set map view to the new location
-                        map.setView([lat, lon], 15);
-
-                        // Clear previous markers
-                        if (window.marker) {
-                            map.removeLayer(window.marker);
-                        }
-
-                        // Add a marker for the new location
-                        window.marker = L.marker([lat, lon]).addTo(map)
-                            .bindPopup(`Location: ${data[0].display_name}`)
-                            .openPopup();
-                    } else {
-                        alert("Location not found.");
-                    }
-                })
-                .catch(error => {
-                    console.error('Error fetching location:', error);
-                    alert("Error fetching location.");
-                });
+        if (streetName.length > 2) { // Only search if more than 2 characters
+            debounceTimer = setTimeout(() => {
+                fetchLocation(streetName); // Fetch location after delay
+            }, 300); // 300 ms debounce delay
         }
     });
 
     // Handle form submission to send the complaint and location
-    document.getElementById("complaintForm").addEventListener("submit", function() {
+    document.getElementById("complaintForm").addEventListener("submit", function () {
         const email = document.getElementById("email-adres").value;
         const name = document.getElementById("name").value;
         const phone = document.getElementById("Telefoonnummer").value;
@@ -78,14 +84,13 @@ document.addEventListener("DOMContentLoaded", function() {
             .then(data => {
                 if (data.success) {
                     alert('Complaint submitted successfully!');
-                    // Optionally, reset the form
-                    document.getElementById("complaintForm").reset();
-                    map.setView([51.9225, 4.4791], 13); // Reset map view (default to Rotterdam)
+                    document.getElementById("complaintForm").reset(); // Reset the form
+                    map.setView([51.9225, 4.4791], 13); // Reset to Rotterdam view
                     if (window.marker) {
                         map.removeLayer(window.marker); // Remove marker after submission
                     }
                 } else {
-                    alert('Failed to submit complaint. Please try again.');
+                                        alert('Failed to submit complaint. Please try again.');
                 }
             })
             .catch(error => {
@@ -97,3 +102,4 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     });
 });
+
