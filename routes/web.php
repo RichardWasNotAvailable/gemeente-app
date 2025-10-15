@@ -11,3 +11,5 @@ Route::get('/', function () {
 
 // Klacht page — your complaint form or list
 Route::get('/klacht', [KlachtController::class, 'index']);
+
+Route::post('/klachten', [KlachtController::class, 'store'])->name('klacht.store');

@@ -13,9 +13,10 @@
     <a href="/klacht">Klachtenformulier</a>
 </li>
 </nav>
-    <nav class="formBody">
-    <form action="">
-            <label for="email-adres">E-mail:</label><br>
+<nav class="formBody">
+    <form action="{{ route('klacht.store') }}" method="post">
+        @csrf
+        <label for="email-adres">E-mail:</label><br>
             <input type="email" id="email-adres" name="email-adres" required><br><br>
             <label for="Naam">Naam:</label><br>
             <input type="text" id="name" name="name" required><br><br>
@@ -30,11 +31,9 @@
                 <option value="Overig">Overig</option>
                 </select><br><br>
                 <label  for="Klacht" required>Uw klacht:</label><br>
-                 <textarea rows="4" cols="50">
+                 <textarea name="klachtText"  rows="4" cols="50">
                 </textarea><br><br>
-<input class="verzendknop" type="submit" value="Klacht Verzenden">
-
-
+                <input class="verzendknop" type="submit" value="Klacht Verzenden">
         </form>
     </nav>
 </body>

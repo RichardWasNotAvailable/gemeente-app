@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreKlachtRequest;
 use App\Http\Requests\UpdateKlachtRequest;
 use App\Models\Klacht;
+use App\Models\Melder;
 
 class KlachtController extends Controller
 {
@@ -13,29 +14,18 @@ class KlachtController extends Controller
      */
     public function index()
     {
-        //
         return view('Klachtenformulier');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(StoreKlachtRequest $request)
     {
-            if ($_SERVER["REQUEST_METHOD"] == "POST") {
-                $name = $_POST['Naam'];
-                $email = $_POST['Email'];
-                $phone = $_POST['Phone'];
-                $complaint = $_POST['klacht'];
-                $typeComplaint = $_POST['type_klacht'];
+                $name = $_POST['name'];
+                $email = $_POST['email-adres'];
+                $phone = $_POST['Telefoonummer'];
+                $complaint = $_POST['klachtText'];
+                $typeComplaint = $_POST['klacht'];
+
+                echo "test";
 
                 melder::initializeDatabase();
                 melder::throwInDB($name, $email, $phone); // putting the user in the database
@@ -44,8 +34,8 @@ class KlachtController extends Controller
 
                 klacht::initializeDatabase();
                 klacht::throwInDB($complainerID, $complaint, $typeComplaint); // putting the complaint in the database
+                return redirect()->route('web.php');
             }
-    }
 
     /**
      * Display the specified resource.
@@ -78,4 +68,5 @@ class KlachtController extends Controller
     {
         //
     }
+
 }

@@ -21,6 +21,7 @@ class Klacht extends Model
         $stmt = $pdo->prepare("INSERT INTO klacht (melder_idmelder, omschrijving) VALUES (:complainerID, :complaint)");
         $stmt->bindParam(':imgLink', $imgLink, PDO::PARAM_STR);
         $stmt->bindParam(':username', $username, PDO::PARAM_STR);
+        echo "test <br>";
         return $stmt->execute();
     }
 }
