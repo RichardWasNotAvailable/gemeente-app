@@ -32,3 +32,17 @@ a{
 label{
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
+
+.verzendknop:hover{
+    background-color: blue;
+    color: white;
+    cursor: pointer;
+}
+
+
+#map {
+    height: 30%; /* or any height you prefer */
+    width: 30%;
+    margin-top: 10px;
+}
+
