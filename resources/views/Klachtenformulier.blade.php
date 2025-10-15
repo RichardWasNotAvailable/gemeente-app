@@ -37,7 +37,16 @@
                 <label  for="Klacht" required>Uw klacht:</label><br>
                  <textarea name="klachtText"  rows="4" cols="50">
                 </textarea><br><br>
+
+
+                <label for="streetName">Straatnaam:</label><br>
+                <input type="text" id="streetName" required><br>
+
+                <div id="map" style="height: 500px;"></div><br><br>
+
+
                 <input class="verzendknop" type="submit" value="Klacht Verzenden">
+    <nav class="formBody">
         </form>
     </nav>
 </body>
