@@ -39,8 +39,7 @@
                 <option value="Overig">Overig</option>
                 </select><br><br>
                 <label  for="Klacht" required>Uw klacht:</label><br>
-                 <textarea name="klachtText"  rows="4" cols="50">
-                </textarea><br><br>
+                 <textarea name="klachtText"  rows="4" cols="50"></textarea><br><br>
                 <input class="verzendknop" type="submit" value="Klacht Verzenden">
     <nav class="formBody">
         </form>
