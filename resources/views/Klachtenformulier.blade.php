@@ -26,6 +26,10 @@
             <input type="text" id="name" name="name" required><br><br>
             <label for="Telefoonnummer">Telefoonnummer:</label><br>
             <input  type="tel" name="Telefoonummer" id="Telefoonnummer" pattern="[0-9]{10}" required><br><br>
+             <label for="streetName">Straatnaam:</label><br>
+                <input type="text" id="streetName" required><br>
+
+                <div id="map" style="height: 500px;"></div><br><br>
              <label for="klacht" required>Type Klacht:</label><br>
              <select name="klacht" id="klacht">
                 <option value="KiesKlacht" selected>-Kies uw klacht-</option>
@@ -35,16 +39,7 @@
                 <option value="Overig">Overig</option>
                 </select><br><br>
                 <label  for="Klacht" required>Uw klacht:</label><br>
-                 <textarea name="klachtText"  rows="4" cols="50">
-                </textarea><br><br>
-
-
-                <label for="streetName">Straatnaam:</label><br>
-                <input type="text" id="streetName" required><br>
-
-                <div id="map" style="height: 500px;"></div><br><br>
-
-
+                 <textarea name="klachtText"  rows="4" cols="50"></textarea><br><br>
                 <input class="verzendknop" type="submit" value="Klacht Verzenden">
     <nav class="formBody">
         </form>

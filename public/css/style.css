@@ -46,3 +46,7 @@ label{
     margin-top: 10px;
 }
 
+textarea{
+    white-space: normal;
+}
+
