@@ -9,7 +9,7 @@ class Klacht extends Model
 {
     /** @use HasFactory<\Database\Factories\KlachtFactory> */
     use HasFactory;
-
+    
     private $ID;
 
     function __construct(){

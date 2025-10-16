@@ -27,12 +27,10 @@ class KlachtController extends Controller
 
                 echo "test";
 
-                melder::initializeDatabase();
                 melder::throwInDB($name, $email, $phone); // putting the user in the database
 
                 $complainerID = melder::getComplainerID(); // getting the ID that is generated for the complainer
 
-                klacht::initializeDatabase();
                 klacht::throwInDB($complainerID, $complaint, $typeComplaint); // putting the complaint in the database
                 return redirect()->route('web.php');
             }
