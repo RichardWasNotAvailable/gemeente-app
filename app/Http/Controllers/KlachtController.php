@@ -21,19 +21,17 @@ class KlachtController extends Controller
     {
                 $name = $_POST['name'];
                 $email = $_POST['email-adres'];
-                $phone = $_POST['Telefoonummer'];
+                $phone = $_POST['Telefoonnummer'];
                 $complaint = $_POST['klachtText'];
                 $typeComplaint = $_POST['klacht'];
 
-                echo "test";
-
                 melder::throwInDB($name, $email, $phone); // putting the user in the database
 
-                $complainerID = melder::getComplainerID(); // getting the ID that is generated for the complainer
+                $complainerID = melder::returnID($name); // getting the ID that is generated for the complainer
 
                 klacht::throwInDB($complainerID, $complaint, $typeComplaint); // putting the complaint in the database
-                return redirect()->route('web.php');
-            }
+                return redirect()->route('klacht');
+    }
 
     /**
      * Display the specified resource.

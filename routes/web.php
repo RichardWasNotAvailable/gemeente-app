@@ -12,4 +12,9 @@ Route::get('/', function () {
 // Klacht page — your complaint form or list
 Route::get('/klacht', [KlachtController::class, 'index']);
 
+// storing the klacht
 Route::post('/klachten', [KlachtController::class, 'store'])->name('klacht.store');
+
+// returning to the klacht page
+Route::get('/klacht', [KlachtController::class, 'index'])->name('klacht');
+

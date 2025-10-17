@@ -30,10 +30,6 @@
         <label for="Telefoonnummer">Telefoonnummer:</label><br>
         <input type="tel" id="Telefoonnummer" name="Telefoonnummer" pattern="[0-9]{10}" required><br><br>
 
-        <label for="streetName">Straatnaam:</label><br>
-        <input type="text" id="streetName" required><br><br>
-
-        <div id="map" style="height: 500px;"></div><br><br>
 
         <label for="klacht">Type Klacht:</label><br>
         <select name="klacht" id="klacht" required>
@@ -44,8 +40,15 @@
             <option value="Overig">Overig</option>
         </select><br><br>
 
+        <label for="streetName">Straatnaam:</label><br>
+        <input type="text" id="streetName" required><br>
+        <div id="map" style="height: 500px;"></div><br><br>
+
         <label for="klachtText">Uw klacht:</label><br>
         <textarea id="klachtText" name="klachtText" rows="4" cols="50" required></textarea><br><br>
+
+
+
 
         <input class="verzendknop" type="submit" value="Klacht Verzenden">
     </form>

@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
+
 
 class Klacht extends Model
 {
@@ -17,11 +19,10 @@ class Klacht extends Model
     }
 
     public static function throwInDB($complainerID, $complaint, $complaintType){
-        global $pdo;
-        $stmt = $pdo->prepare("INSERT INTO klacht (melder_idmelder, omschrijving) VALUES (:complainerID, :complaint)");
-        $stmt->bindParam(':imgLink', $imgLink, PDO::PARAM_STR);
-        $stmt->bindParam(':username', $username, PDO::PARAM_STR);
-        echo "test <br>";
-        return $stmt->execute();
+        // Use Laravel's query builder
+        return DB::table('klacht')->insert([
+            'melder_idmelder' => $complainerID,
+            'omschrijving' => $complaint,
+        ]);
     }
 }

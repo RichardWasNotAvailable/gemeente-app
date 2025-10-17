@@ -24,14 +24,9 @@ class Melder extends Model{
             'mobiel' => $phone,
         ]);
     }
-    
 
-    public static function returnID($naam){
-        global $pdo;
-        $stmt = $pdo->prepare("SELECT ID FROM melder WHERE naam = :naam");
-        $stmt->bindParam(':username', $username);
-        $stmt->execute();
-        $result = $stmt->fetch(PDO::FETCH_ASSOC);
-        return $result ? $result['naam'] : null;
+
+    public static function returnID($naam) {
+        return \DB::table('melder')->where('naam', $naam)->value('idmelder');
     }
 }
