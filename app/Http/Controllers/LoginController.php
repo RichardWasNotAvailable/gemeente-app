@@ -2,19 +2,34 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreMedewerkersList;
-use App\Http\Requests\UpdateMedewerkersPage;
-use  App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
-class LoginController extends Controller{
-    public function index(){
-        return view("medewerker");
+class LoginController extends Controller
+{
+    public function index()
+    {
+        // shows medewerkerlogin.blade.php
+        return view('medewerkerlogin');
+    }
+
+    public function login(Request $request)
+    {
+        // validate fields first
+        $request->validate([
+            'email'    => 'required|email',
+            'password' => 'required',
+        ]);
+
+        // try to log in
+        if (Auth::attempt($request->only('email', 'password'))) {
+            // success → redirect to dashboard or wherever
+            return redirect()->route('dashboard');
+        }
+
+        // failed -> send back with error
+        return back()->withErrors([
+            'email' => 'Email of wachtwoord klopt niet.',
+        ])->withInput();
+    }
 }
-public function login(StoreMedewerkersList $request){
-
-    $name = $_POST["name"];
-    $email = $_POST["email"];
-    $password = $_POST["password"];
-
-    medewerker:throwInDB($name, $email, $password);
-}}

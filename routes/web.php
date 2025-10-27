@@ -20,4 +20,5 @@ Route::post('/klachten', [KlachtController::class, 'store'])->name('klacht.store
 Route::get('/klacht', [KlachtController::class, 'index'])->name('klacht');
 
 // going to the employee page
-Route::get('/medewerker',[LoginController::class,''])->name('medewerker');
+Route::get('/medewerker-login', [LoginController::class, 'index'])->name('medewerker.login');
+Route::post('/medewerker-login', [LoginController::class, 'login']);
