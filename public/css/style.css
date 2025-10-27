@@ -50,3 +50,23 @@ textarea{
     white-space: normal;
 }
 
+.submitButton {
+  background-color: forestgreen;
+  color: wheat;
+  padding: 10px;
+  border-radius: 10px;
+  margin-top: 10%;
+  margin-left: 80%;
+}
+
+.signUpBox {
+  position: absolute;
+  margin-left: 50%;
+  background-color: lightgray;
+  padding-left: 50px;
+  padding-right: 50px;
+  padding-top: 50px;
+  border-radius: 20px;
+  margin-left: 35%;
+  margin-top: 10%;
+}

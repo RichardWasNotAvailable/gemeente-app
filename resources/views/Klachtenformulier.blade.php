@@ -15,6 +15,7 @@
     <li>
         <a href="/">Home</a>
         <a href="/klacht">Klachtenformulier</a>
+        <a href="/medewerkerportaal">Medewerkersportaal</a>
     </li>
 </nav>
 

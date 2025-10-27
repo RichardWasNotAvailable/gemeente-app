@@ -3,6 +3,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\KlachtController;
+use App\Http\Controllers\LoginController;
 
 // Home route — the default Laravel welcome page
 Route::get('/', function () {
@@ -18,3 +19,5 @@ Route::post('/klachten', [KlachtController::class, 'store'])->name('klacht.store
 // returning to the klacht page
 Route::get('/klacht', [KlachtController::class, 'index'])->name('klacht');
 
+// going to the employee page
+Route::get('/medewerker',[LoginController::class,''])->name('medewerker');
