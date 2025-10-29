@@ -42,7 +42,7 @@
         </select><br><br>
 
         <label for="streetName">Straatnaam:</label><br>
-        <input type="text" id="streetName" required><br>
+        <input type="text" id="streetName" name="straatNaam" required><br>
         <div id="map" style="height: 500px;"></div><br><br>
 
         <label for="klachtText">Uw klacht:</label><br>
