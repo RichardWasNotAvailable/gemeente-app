@@ -1,16 +1,16 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Medewerker;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 
-class LoginController extends Controller
+class AuthController extends Controller
 {
-    public function index()
+    public function showLogin()
     {
-        return view('medewerkerlogin'); // ensure this view exists
+        return view('login');
     }
 
     public function login(Request $request)
@@ -22,8 +22,7 @@ class LoginController extends Controller
 
         $user = Medewerker::where('email', $request->email)->first();
 
-        // Check if user exists and if password matches
-        if ($user && $request->wachtwoord === $user->wachtwoord) {
+        if ($user && Hash::check($request->wachtwoord, $user->wachtwoord)) {
             Session::put('medewerker_id', $user->MedewerkerID);
             Session::put('naam', $user->Naam);
             return redirect('/dashboard');
@@ -35,6 +34,6 @@ class LoginController extends Controller
     public function logout()
     {
         Session::flush();
-        return redirect('/medewerker-login');
+        return redirect('/login');
     }
 }

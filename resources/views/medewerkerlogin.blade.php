@@ -1,19 +1,20 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inloggen voor Medewerkers</title>
-    <link rel="stylesheet" href="{{asset('css/style.css')  }}">
-</head>
+<html>
+<head><title>Medewerker Login</title></head>
 <body>
- <nav class="signUpBox">
-                <form method="post" action="../Controllers/loginController.php">
-                    Gebruikersnaam: <input class="Username" type="text" name="Naam" required><br>
-                    Wachtwoord: <input type="password" class="Password" name="Wachtwoord" required><br>
-                    <input class="submitButton" type="submit" value="Inloggen" name="Inloggen">
-                    <a class="WebsiteButton" href="../Controllers/HomepageController.php">Ga naar de Website</a>
-                </form>
-            </nav>
+<h2>Medewerker Login</h2>
+@if($errors->any())
+  <p style="color:red;">{{ $errors->first() }}</p>
+@endif
+
+<form method="POST" action="{{ route('medewerker.login') }}">
+    @csrf
+    <label>Email:</label>
+    <input type="email" name="email" required><br>
+    <label>Wachtwoord:</label>
+    <input type="password" name="wachtwoord" required><br>
+    <button type="submit">Inloggen</button>
+</form>
+
 </body>
 </html>
