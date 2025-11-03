@@ -19,19 +19,19 @@ class KlachtController extends Controller
 
     public function store(StoreKlachtRequest $request)
     {
-                $name = $_POST['name'];
-                $email = $_POST['email-adres'];
-                $phone = $_POST['Telefoonnummer'];
-                $complaint = $_POST['klachtText'];
-                $typeComplaint = $_POST['klacht'];
-                $streetName = $_POST['straatNaam'];
+        $name = $_POST['name'];
+        $email = $_POST['email-adres'];
+        $phone = $_POST['Telefoonnummer'];
+        $complaint = $_POST['klachtText'];
+        $typeComplaint = $_POST['klacht'];
+        $streetName = $_POST['straatNaam'];
 
-                melder::throwInDB($name, $email, $phone); // putting the user in the database
+        melder::throwInDB($name, $email, $phone); // putting the user in the database
 
-                $complainerID = melder::returnID($name); // getting the ID that is generated for the complainer
+        $complainerID = melder::returnID($name); // getting the ID that is generated for the complainer
 
-                klacht::throwInDB($complainerID, $complaint, $typeComplaint, $streetName); // putting the complaint in the database
-                return redirect()->route('klacht');
+        klacht::throwInDB($complainerID, $complaint, $typeComplaint, $streetName); // putting the complaint in the database
+        return redirect()->route('klacht');
     }
 
     /**

@@ -26,7 +26,7 @@ class Melder extends Model{
     }
 
 
-    public static function returnID($naam) {
+    public static function returnID($naam) { // returning the ID of the complainer based on their name
         return \DB::table('melder')->where('naam', $naam)->value('idmelder');
     }
 }
