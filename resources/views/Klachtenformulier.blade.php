@@ -33,7 +33,7 @@
 
 
         <label for="klacht">Type Klacht:</label><br>
-        <select name="klacht" id="klacht" required>
+        <select name="klachtType" id="klacht" required>
             <option value="" selected>- Kies uw klacht -</option>
             <option value="Zwerfafval">Zwerfafval</option>
             <option value="Dood_Dier">Dood dier</option>

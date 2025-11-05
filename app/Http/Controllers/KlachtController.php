@@ -23,7 +23,7 @@ class KlachtController extends Controller
         $email = $_POST['email-adres'];
         $phone = $_POST['Telefoonnummer'];
         $complaint = $_POST['klachtText'];
-        $typeComplaint = $_POST['klacht'];
+        $typeComplaint = $_POST['klachtType'];
         $streetName = $_POST['straatNaam'];
 
         melder::throwInDB($name, $email, $phone); // putting the user in the database

@@ -18,11 +18,13 @@ class Klacht extends Model
 
     }
 
-    public static function throwInDB($complainerID, $complaint, $complaintType){
+    public static function throwInDB($complainerID, $complaint, $complaintType, $location){
         // Use Laravel's query builder
         return DB::table('klacht')->insert([
             'melder_idmelder' => $complainerID,
             'omschrijving' => $complaint,
+            'klacht_type' => $complaintType,
+            'locatie' => $location,
         ]);
     }
 }
