@@ -11,42 +11,32 @@
   </style>
 </head>
 <body>
-  <h2>Welkom, {{ $naam }}!</h2>
-  <a href="/logout">Uitloggen</a>
+    <h3>📋 Klachten overzicht</h3>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Omschrijving</th>
+            <th>Datum</th> <!-- Column for date, assuming this is required -->
+        </tr>
+        @if($klachten->isEmpty())
+            <tr>
+                <td colspan="3">Geen klachten beschikbaar.</td>
+            </tr>
+        @else
+            @foreach($klachten as $klacht)
+                <tr>
+                    <td>{{ $klacht->idklacht }}</td> <!-- Corrected property access -->
+                    <td>{{ $klacht->omschrijving }}</td> <!-- Ensure this matches your database schema -->
+                    <td>{{ $klacht->created_at ?? 'N/A' }}</td> <!-- Display created_at if available -->
+                </tr>
+            @endforeach
+        @endif
+    </table>
 
-  <h3>📋 Klachten overzicht</h3>
-  <table>
-    <tr><th>Naam</th><th>Locatie</th><th>Bericht</th><th>Datum</th></tr>
-    @foreach($klachten as $klacht)
-      <tr>
-        <td>{{ $klacht->naam }}</td>
-        <td>{{ $klacht->locatie }}</td>
-        <td>{{ $klacht->bericht }}</td>
-        <td>{{ $klacht->created_at }}</td>
-      </tr>
-    @endforeach
-  </table>
+    <h3>Klachtenportaal - Gemeente</h3>
+    <div id="map"></div>
 
-  <h3>Klachtenportaal - Gemeente</h3>
-  <div id="map"></div>
-
-  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-  <script>
-    const map = L.map('map').setView([52.3676, 4.9041], 7); // Default: Netherlands
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      maxZoom: 19,
-      attribution: '© OpenStreetMap contributors'
-    }).addTo(map);
-
-    const klachten = @json($klachten);
-
-    klachten.forEach(k => {
-      if (k.latitude && k.longitude) {
-        L.marker([k.latitude, k.longitude])
-          .addTo(map)
-          .bindPopup(`<b>${k.naam}</b><br>${k.locatie}<br>${k.bericht}`);
-      }
-    });
-  </script>
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="/js/map.js"></script>
 </body>
 </html>

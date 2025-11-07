@@ -26,7 +26,12 @@ class Melder extends Model{
     }
 
 
+<<<<<<< Updated upstream
     public static function returnID($naam) { // returning the ID of the complainer based on their name
         return \DB::table('melder')->where('naam', $naam)->value('idmelder');
+=======
+    public static function returnID($naam) {
+        return DB::table('melder')->where('naam', $naam)->value('idmelder');
+>>>>>>> Stashed changes
     }
 }
