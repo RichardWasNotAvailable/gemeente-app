@@ -11,5 +11,4 @@ class Medewerker extends Model
     protected $fillable = ['Naam', 'email', 'wachtwoord'];
     protected $hidden = ['wachtwoord'];
     public $timestamps = true;
-}
-
+};

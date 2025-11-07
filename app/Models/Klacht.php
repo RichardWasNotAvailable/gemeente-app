@@ -6,18 +6,20 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
-
 class Klacht extends Model
 {
-    /** @use HasFactory<\Database\Factories\KlachtFactory> */
+
+    protected $table = 'klacht';
+
+    protected $fillable = [
+        'melder_idmelder',
+        'omschrijving',
+        'klacht_type',
+        'locatie',
+    ];
+
     use HasFactory;
     
-    private $ID;
-
-    function __construct(){
-
-    }
-
     public static function throwInDB($complainerID, $complaint, $complaintType, $location){
         // Use Laravel's query builder
         return DB::table('klacht')->insert([
