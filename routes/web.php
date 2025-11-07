@@ -19,7 +19,4 @@ Route::get('/medewerker-login', [LoginController::class, 'index'])->name('medewe
 Route::post('/medewerker-login', [LoginController::class, 'login']);
 
 // Protected dashboard (only for logged-in employees)
-Route::middleware(['web'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-    
-});
