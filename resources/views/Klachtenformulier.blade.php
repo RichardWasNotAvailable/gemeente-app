@@ -31,13 +31,13 @@
         <label for="Telefoonnummer">Telefoonnummer:</label><br>
         <input type="tel" id="Telefoonnummer" name="Telefoonnummer" pattern="[0-9]{10}" required><br><br>
 
-
         <label for="klacht">Type Klacht:</label><br>
         <select name="klachtType" id="klacht" required>
             <option value="" selected>- Kies uw klacht -</option>
             <option value="Zwerfafval">Zwerfafval</option>
             <option value="Dood_Dier">Dood dier</option>
             <option value="Kapot_Stoplicht">Kapot Stoplicht</option>
+            <option value="Op hol geslagen Brabanders">Op hol geslagen Brabanders</option>
             <option value="Overig">Overig</option>
         </select><br><br>
 
@@ -47,9 +47,6 @@
 
         <label for="klachtText">Uw klacht:</label><br>
         <textarea id="klachtText" name="klachtText" rows="4" cols="50" required></textarea><br><br>
-
-
-
 
         <input class="verzendknop" type="submit" value="Klacht Verzenden">
     </form>

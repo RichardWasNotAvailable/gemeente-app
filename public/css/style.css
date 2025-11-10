@@ -44,6 +44,7 @@ body{
     padding:1rem;
 }
 
+
 form#complaintForm{
     background:var(--card);
     padding:1.25rem 1.5rem;
@@ -116,3 +117,26 @@ input:focus,select:focus,textarea:focus{outline:3px solid rgba(11,94,215,0.12);o
 /* Keep any older classes but make them harmonious */
 .submitButton{background:forestgreen;color:#fff;padding:10px;border-radius:10px}
 .signUpBox{background:lightgray;padding:1rem;border-radius:12px}
+
+
+/* dashboard styles */
+.dashboard-container {
+    display: flex; /* Use flexbox for layout */
+}
+
+.klacht-row {
+    border: 1px solid #ccc;
+    padding: 8px;
+    width: 50%; /* Left half of the screen */
+}
+
+.klachtCell {
+    border: 1px solid #ccc;
+    padding: 8px;
+}
+
+#map {
+    width: 50%;  /* Right half of the screen */
+    height: 100vh;
+    border-radius: 8px;
+}

@@ -25,12 +25,13 @@ class KlachtController extends Controller
         $complaint = $_POST['klachtText'];
         $typeComplaint = $_POST['klachtType'];
         $streetName = $_POST['straatNaam'];
+        $currentDate = date('Y-m-d H:i');
 
         melder::throwInDB($name, $email, $phone); // putting the user in the database
 
         $complainerID = melder::returnID($name); // getting the ID that is generated for the complainer
 
-        klacht::throwInDB($complainerID, $complaint, $typeComplaint, $streetName); // putting the complaint in the database
+        klacht::throwInDB($complainerID, $complaint, $typeComplaint, $streetName, $currentDate); // putting the complaint in the database
         return redirect()->route('klacht');
     }
 
