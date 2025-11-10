@@ -9,97 +9,140 @@ document.addEventListener("DOMContentLoaded", function () {
     const streetInput = document.getElementById("streetName");
     let debounceTimer; // To hold the debounce timer
 
-    // Function to fetch location
-    function fetchLocation(streetName) {
-        fetch(`https://nominatim.openstreetmap.org/search?street=${encodeURIComponent(streetName)}&city=Rotterdam&country=Netherlands&format=json`)
+    // Generic geocode function. If input looks like "lat,lon" it uses it directly.
+    function geocodeAndMark(query, popupText) {
+        // If query is empty, do nothing
+        if (!query) return;
+
+        // If it's already lat,lon
+        const coordMatch = query.trim().match(/^(-?\d+(?:\.\d+)?)[,\s]+(-?\d+(?:\.\d+)?)$/);
+        if (coordMatch) {
+            const lat = parseFloat(coordMatch[1]);
+            const lon = parseFloat(coordMatch[2]);
+            setMapMarker(lat, lon, popupText || query);
+            return;
+        }
+
+        // Otherwise, use Nominatim search
+        fetch(`https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(query + ' Rotterdam, Netherlands')}&format=json&limit=1`)
             .then(response => response.json())
             .then(data => {
-                if (data.length > 0) {
+                if (data && data.length > 0) {
                     const lat = data[0].lat;
                     const lon = data[0].lon;
-
-                    // Set map view to the new location
-                    map.setView([lat, lon], 15);
-
-                    // Clear previous markers
-                    if (window.marker) {
-                        map.removeLayer(window.marker);
-                    }
-
-                    // Add a marker for the new location
-                    window.marker = L.marker([lat, lon]).addTo(map)
-                        .bindPopup(`Location: ${data[0].display_name}`)
-                        .openPopup();
+                    const displayName = data[0].display_name;
+                    setMapMarker(lat, lon, popupText || displayName);
+                } else {
+                    console.warn('No geocoding result for', query);
                 }
             })
-            .catch(error => {
-                console.error('Error fetching location:', error);
-                document.getElementById("error-message").innerText = "Error fetching location. Please check your input.";
-            });
+            .catch(err => console.error('Geocoding error:', err));
     }
 
-    // Add an event listener to the input field with debounce
-    streetInput.addEventListener("input", function () {
-        clearTimeout(debounceTimer); // Clear previous timer
-        const streetName = this.value;
+    function setMapMarker(lat, lon, popupText) {
+        map.setView([lat, lon], 15);
 
-        if (streetName.length > 2) { // Only search if more than 2 characters
-            debounceTimer = setTimeout(() => {
-                fetchLocation(streetName); // Fetch location after delay
-            }, 300); // 300 ms debounce delay
-        }
-    });
-
-    // Handle form submission to send the complaint and location
-    document.getElementById("complaintForm").addEventListener("submit", function () {
-        const email = document.getElementById("email-adres").value;
-        const name = document.getElementById("name").value;
-        const phone = document.getElementById("Telefoonnummer").value;
-        const complaintType = document.getElementById("klacht").value;
-        const complaintText = document.getElementById("klachtText").value;
-
-        // Obtain the location from the marker
         if (window.marker) {
-            const lat = window.marker.getLatLng().lat;
-            const lon = window.marker.getLatLng().lng;
+            map.removeLayer(window.marker);
+        }
 
-            // Send the complaint data to the server
-            fetch('/api/send-complaint', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content') // Ensure CSRF protection
-                },
-                body: JSON.stringify({
-                    email: email,
-                    name: name,
-                    phone: phone,
-                    complaintType: complaintType,
-                    complaintText: complaintText,
-                    latitude: lat,
-                    longitude: lon
+        window.marker = L.marker([lat, lon]).addTo(map)
+            .bindPopup(popupText || `Location: ${lat}, ${lon}`)
+            .openPopup();
+    }
+
+    // Add an event listener to the input field with debounce if present
+    if (streetInput) {
+        streetInput.addEventListener("input", function () {
+            clearTimeout(debounceTimer); // Clear previous timer
+            const streetName = this.value;
+
+            if (streetName.length > 2) { // Only search if more than 2 characters
+                debounceTimer = setTimeout(() => {
+                    geocodeAndMark(streetName);
+                }, 300); // 300 ms debounce delay
+            }
+        });
+    }
+
+    // Handle form submission to send the complaint and location (only if form exists)
+    const complaintForm = document.getElementById("complaintForm");
+    if (complaintForm) {
+        complaintForm.addEventListener("submit", function (e) {
+            e.preventDefault();
+            const email = document.getElementById("email-adres").value;
+            const name = document.getElementById("name").value;
+            const phone = document.getElementById("Telefoonnummer").value;
+            const complaintType = document.getElementById("klacht").value;
+            const complaintText = document.getElementById("klachtText").value;
+
+            // Obtain the location from the marker
+            if (window.marker) {
+                const lat = window.marker.getLatLng().lat;
+                const lon = window.marker.getLatLng().lng;
+
+                // Send the complaint data to the server
+                fetch('/api/send-complaint', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': (document.querySelector('meta[name="csrf-token"]') || {}).getAttribute ? document.querySelector('meta[name="csrf-token"]').getAttribute('content') : '' // Ensure CSRF protection if present
+                    },
+                    body: JSON.stringify({
+                        email: email,
+                        name: name,
+                        phone: phone,
+                        complaintType: complaintType,
+                        complaintText: complaintText,
+                        latitude: lat,
+                        longitude: lon
+                    })
                 })
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    alert('Complaint submitted successfully!');
-                    document.getElementById("complaintForm").reset(); // Reset the form
-                    map.setView([51.9225, 4.4791], 13); // Reset to Rotterdam view
-                    if (window.marker) {
-                        map.removeLayer(window.marker); // Remove marker after submission
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert('Complaint submitted successfully!');
+                        complaintForm.reset(); // Reset the form
+                        map.setView([51.9225, 4.4791], 13); // Reset to Rotterdam view
+                        if (window.marker) {
+                            map.removeLayer(window.marker); // Remove marker after submission
+                        }
+                    } else {
+                        alert('Failed to submit complaint. Please try again.');
                     }
-                } else {
-                                        alert('Failed to submit complaint. Please try again.');
-                }
-            })
-            .catch(error => {
-                console.error('Error sending complaint:', error);
-                alert("Error sending complaint.");
-            });
+                })
+                .catch(error => {
+                    console.error('Error sending complaint:', error);
+                    alert("Error sending complaint.");
+                });
+            } else {
+                alert("Please locate a street before submitting your complaint.");
+            }
+        });
+    }
+
+    // When viewing complaints on the dashboard, handle clicks on the 'view-on-map' buttons.
+    document.addEventListener('click', function (e) {
+        const btn = e.target.closest && e.target.closest('.view-on-map');
+        if (!btn) return;
+
+        // Prefer data-loc attribute, fall back to reading the location cell in the same row
+        let locationText = btn.dataset.loc;
+        if (!locationText) {
+            const row = btn.closest('tr');
+            if (row) {
+                // try to find the cell that contains locatie text (we give it class 'klachtCell')
+                const cells = Array.from(row.querySelectorAll('.klachtCell'));
+                // the location is expected to be in one of the cells; attempt to find a value that is not purely numeric id
+                const possible = cells.map(c => c.innerText.trim()).filter(t => t && !/^\d+$/.test(t));
+                locationText = possible.length ? possible[possible.length - 1] : '';
+            }
+        }
+
+        if (locationText) {
+            geocodeAndMark(locationText, `Klacht locatie: ${locationText}`);
         } else {
-            alert("Please locate a street before submitting your complaint.");
+            console.warn('No location available for this complaint.');
         }
     });
 });
-

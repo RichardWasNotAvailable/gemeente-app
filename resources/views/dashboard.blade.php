@@ -37,7 +37,10 @@
                     <td class="klachtCell">{{$klacht->omschrijving }}</td> <!-- Ensure this matches your database schema -->
                     <td class="klachtCell">{{$klacht->datum }}</td> <!-- Display created_at if available -->
                     <td class="klachtCell">{{$klacht->locatie}} </td>
-                    <td class="klachtCell" >{{$klacht->is_opgelost}}</td>
+                    <td class="klachtCell">
+                        <!-- Attach the raw locatie value so the map can geocode or use coordinates -->
+                        <button class="view-on-map" data-loc="{{ $klacht->locatie }}">Bekijk op kaart</button>
+                    </td>
                 </tr>
             @endforeach
         @endif
