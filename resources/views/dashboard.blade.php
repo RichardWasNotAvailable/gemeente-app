@@ -23,6 +23,7 @@
             <th>Omschrijving</th>
             <th>Datum</th>
             <th>locatie</th>
+            <th>is opgelost</th>
         </tr>
 
         @if($klachten->isEmpty())
@@ -32,25 +33,27 @@
         @else
             @foreach($klachten as $klacht)
                 <tr class="klacht-row">
-                    <td class="klachtCell">{{ $klacht->idklacht }}</td> <!-- Corrected property access -->
+                    <td class="klachtCell">{{ $klacht->idklacht }}</td> 
                     <td class="klachtCell">{{$klacht->klacht_type}} </td>
-                    <td class="klachtCell">{{$klacht->omschrijving }}</td> <!-- Ensure this matches your database schema -->
-                    <td class="klachtCell">{{$klacht->datum }}</td> <!-- Display created_at if available -->
-                    <td class="klachtCell">{{$klacht->locatie}} </td>
+                    <td class="klachtCell">{{$klacht->omschrijving }}</td>
+                    <td class="klachtCell">{{$klacht->datum }}</td>
                     <td class="klachtCell">
-                        <!-- Attach the raw locatie value so the map can geocode or use coordinates -->
-                        <button class="view-on-map" data-loc="{{ $klacht->locatie }}">Bekijk op kaart</button>
+                        <button class="view-on-map" data-loc="{{ $klacht->locatie }}">
+                            {{ $klacht->locatie }}
+                        </button>
                     </td>
+
+                    <td class="klachtCell">{{$klacht->is_opgelost}}
+                        <button >nee</button>
+                    </td>
+
                 </tr>
             @endforeach
         @endif
     </table>
 
-        <!-- Your complaints content here -->
     </div>
-    <div id="map">
-        <!-- Your map content here -->
-    </div>
+    <div id="map"></div>
        <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <script src="/js/map.js"></script>
 </div>

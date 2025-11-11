@@ -25,7 +25,7 @@ class KlachtController extends Controller
         $complaint = $_POST['klachtText'];
         $typeComplaint = $_POST['klachtType'];
         $streetName = $_POST['straatNaam'];
-        $currentDate = date('Y-m-d H:i');
+        $currentDate = date('Y-m-d H');
 
         melder::throwInDB($name, $email, $phone); // putting the user in the database
 

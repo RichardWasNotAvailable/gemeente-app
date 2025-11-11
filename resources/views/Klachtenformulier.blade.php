@@ -43,7 +43,7 @@
 
         <label for="streetName">Straatnaam:</label><br>
         <input type="text" id="streetName" name="straatNaam" required><br>
-        <div id="map" style="height: 500px;"></div><br><br>
+        <div id="map" class="" style="height: 500px; width: 500px;"></div><br><br>
 
         <label for="klachtText">Uw klacht:</label><br>
         <textarea id="klachtText" name="klachtText" rows="4" cols="50" required></textarea><br><br>

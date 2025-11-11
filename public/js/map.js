@@ -70,54 +70,34 @@ document.addEventListener("DOMContentLoaded", function () {
     if (complaintForm) {
         complaintForm.addEventListener("submit", function (e) {
             e.preventDefault();
-            const email = document.getElementById("email-adres").value;
-            const name = document.getElementById("name").value;
-            const phone = document.getElementById("Telefoonnummer").value;
-            const complaintType = document.getElementById("klacht").value;
-            const complaintText = document.getElementById("klachtText").value;
 
-            // Obtain the location from the marker
-            if (window.marker) {
-                const lat = window.marker.getLatLng().lat;
-                const lon = window.marker.getLatLng().lng;
-
-                // Send the complaint data to the server
-                fetch('/api/send-complaint', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': (document.querySelector('meta[name="csrf-token"]') || {}).getAttribute ? document.querySelector('meta[name="csrf-token"]').getAttribute('content') : '' // Ensure CSRF protection if present
-                    },
-                    body: JSON.stringify({
-                        email: email,
-                        name: name,
-                        phone: phone,
-                        complaintType: complaintType,
-                        complaintText: complaintText,
-                        latitude: lat,
-                        longitude: lon
-                    })
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        alert('Complaint submitted successfully!');
-                        complaintForm.reset(); // Reset the form
-                        map.setView([51.9225, 4.4791], 13); // Reset to Rotterdam view
-                        if (window.marker) {
-                            map.removeLayer(window.marker); // Remove marker after submission
-                        }
-                    } else {
-                        alert('Failed to submit complaint. Please try again.');
-                    }
-                })
-                .catch(error => {
-                    console.error('Error sending complaint:', error);
-                    alert("Error sending complaint.");
-                });
-            } else {
+            // Ensure a marker/location exists before submitting
+            if (!window.marker) {
                 alert("Please locate a street before submitting your complaint.");
+                return;
             }
+
+            const lat = window.marker.getLatLng().lat;
+            const lon = window.marker.getLatLng().lng;
+
+            // Create or update hidden inputs for latitude/longitude so the existing
+            // server-side controller (which expects form POST data) receives them.
+            function upsertHidden(name, value) {
+                let input = document.querySelector(`input[name="${name}"]`);
+                if (!input) {
+                    input = document.createElement('input');
+                    input.type = 'hidden';
+                    input.name = name;
+                    complaintForm.appendChild(input);
+                }
+                input.value = value;
+            }
+
+            upsertHidden('latitude', lat);
+            upsertHidden('longitude', lon);
+
+            // Submit the form to the server (will use the form action /klachten and include @csrf token)
+            complaintForm.submit();
         });
     }
 

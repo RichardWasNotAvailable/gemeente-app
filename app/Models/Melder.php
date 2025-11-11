@@ -25,7 +25,6 @@ class Melder extends Model{
         ]);
     }
 
-
     public static function returnID($naam) {
         return DB::table('melder')->where('naam', $naam)->value('idmelder');
     }
