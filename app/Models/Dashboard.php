@@ -26,6 +26,6 @@ class Dashboard extends Model
     // Return the ID of a specific complaint
     public static function returnKlachten()
     {
-        return DB::table('klacht');
+        return DB::table('klacht')->where('is_opgelost', false)->get();
     }
 }

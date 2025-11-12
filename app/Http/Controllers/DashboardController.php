@@ -23,7 +23,7 @@ class DashboardController extends Controller
     $errorMessage = '';
     // Retrieve klachten from the Dashboard model (return a collection)
     // Dashboard::returnKlachten() returns a query builder, so call ->get()
-    $klachten = Dashboard::returnKlachten()->get();
+    $klachten = Dashboard::returnKlachten();
         // Pass variables to the view
         return view('dashboard', compact('Naam', 'klachten', 'errorMessage'));
     }

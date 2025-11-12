@@ -21,7 +21,7 @@ class Klacht extends Model
     use HasFactory;
     
     public static function throwInDB($complainerID, $complaint, $complaintType, $location, $date){
-        // Use Laravel's query builder
+        // throw the klacht in the database using the parameters
         return DB::table('klacht')->insert([
             'melder_idmelder' => $complainerID,
             'omschrijving' => $complaint,
