@@ -10,8 +10,6 @@ class Melder extends Model{
     /** @use HasFactory<\Database\Factories\MelderFactory> */
     use HasFactory;
 
-    use HasFactory;
-
     protected $table = 'melder';
     public $timestamps = false;
 

@@ -21,6 +21,10 @@ body{
 .topBar{
     background: linear-gradient(90deg,var(--primary),var(--primary-dark));
     padding:0.5rem 1rem;
+    position: absolute;
+    top: 0;
+    height: 40px;
+    width: 100%;
 }
 .topBar li{
     list-style:none;

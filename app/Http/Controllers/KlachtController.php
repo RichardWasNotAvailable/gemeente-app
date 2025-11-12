@@ -54,9 +54,10 @@ class KlachtController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateKlachtRequest $request, Klacht $klacht)
+    public function update(UpdateKlachtRequest $request, $klachtID)
     {
-        //
+        Klacht::updateStatus($klachtID, true);
+        return redirect()->route('dashboard');
     }
 
     /**

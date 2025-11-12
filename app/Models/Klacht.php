@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\DB;
 class Klacht extends Model
 {
     protected $table = 'klacht';
+    protected $primaryKey = 'idklacht'; // Specify the primary key
 
     protected $fillable = [
         'melder_idmelder',
@@ -28,5 +29,11 @@ class Klacht extends Model
             'locatie' => $location,
             'datum' => $date,
         ]);
+    }
+
+    public static function updateStatus($klachtID, $newStatus){
+        return DB::table('klacht')
+            ->where('idklacht', $klachtID)
+            ->update(['is_opgelost' => $newStatus]);
     }
 }

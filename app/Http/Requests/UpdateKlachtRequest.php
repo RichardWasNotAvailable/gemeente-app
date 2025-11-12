@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Session;
 
 class UpdateKlachtRequest extends FormRequest
 {
@@ -11,7 +12,8 @@ class UpdateKlachtRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        // Allow updating a klacht only when a medewerker is logged in.
+        return $this->session()->has('medewerker_id') || Session::has('medewerker_id');
     }
 
     /**

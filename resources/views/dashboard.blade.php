@@ -10,9 +10,10 @@
   </style>
 </head>
 <body>
+
     <h3>Klachtenportaal - Gemeente</h3>
 
-    <div class="dashboard-container">
+    <div class="dashboard-container"> 
     <div class="klacht-row">
 
         <h3>📋 Klachten overzicht</h3>
@@ -26,7 +27,7 @@
             <th>is opgelost</th>
         </tr>
 
-        @if($klachten->isEmpty())
+        @if($klachten->isEmpty()) // if there are no complaints
             <tr>
                 <td colspan="3">Geen klachten beschikbaar.</td>
             </tr>
@@ -43,10 +44,13 @@
                         </button>
                     </td>
 
-                    <td class="klachtCell">{{$klacht->is_opgelost}}
-                        <button >nee</button>
+                    <td class="klachtCell">
+                        <form action="{{ route('klachten.update', $klacht->idklacht) }}" method="POST" style="display:inline">
+                            @csrf
+                            @method('PUT')
+                            <button type="submit">Markeer als opgelost</button>
+                        </form>
                     </td>
-
                 </tr>
             @endforeach
         @endif
