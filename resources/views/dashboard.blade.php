@@ -17,7 +17,7 @@
     <div class="klacht-row">
 
         <h3>📋 Klachten overzicht</h3>
-    <table>
+    <table class="klacht-table">
         <tr>
             <th>ID</th>
             <th>type</th>
