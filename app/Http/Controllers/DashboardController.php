@@ -18,13 +18,13 @@ class DashboardController extends Controller
         $Naam = Session::get('Naam', 'Guest'); // Default to 'Guest' if Naam is not set
 
     // Initialize an empty collection for klachten
-    $klachten = collect();
-        
     $errorMessage = '';
-    // Retrieve klachten from the Dashboard model (return a collection)
-    // Dashboard::returnKlachten() returns a query builder, so call ->get()
+    // Retrieve unresolved klachten from the Dashboard model
     $klachten = Dashboard::returnKlachten();
+    // Retrieve resolved (opgeloste) klachten as well
+    $opgelosteKlachten = Dashboard::returnOpgelosteKlachten();
+
         // Pass variables to the view
-        return view('dashboard', compact('Naam', 'klachten', 'errorMessage'));
+        return view('dashboard', compact('Naam', 'klachten', 'opgelosteKlachten', 'errorMessage'));
     }
 }

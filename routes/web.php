@@ -19,7 +19,7 @@ Route::post('/klachten', [KlachtController::class, 'store'])->name('klacht.store
 Route::get('/medewerker-login', [LoginController::class, 'index'])->name('medewerker.login');
 Route::post('/medewerker-login', [LoginController::class, 'login']);
 
-// Protected dashboard (only for logged-in employees)
+// Protected dashboard for logged in employees
 Route::middleware(['web'])->group(function () {
     // request to update (mark solved) a klacht
     Route::put('/klachten/{klachtID}', [KlachtController::class, 'update'])->name('klachten.update');

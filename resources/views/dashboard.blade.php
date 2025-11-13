@@ -9,13 +9,12 @@
     
   </style>
 </head>
-<body>
+<body class="dashboard-body">
 
     <h3>Klachtenportaal - Gemeente</h3>
 
     <div class="dashboard-container"> 
     <div class="klacht-row">
-
         <h3>📋 Klachten overzicht</h3>
     <table class="klacht-table">
         <tr>
@@ -34,7 +33,7 @@
         @else
             @foreach($klachten as $klacht)
                 <tr class="klacht-row">
-                    <td class="klachtCell">{{ $klacht->idklacht }}</td> 
+                    <td class="klachtCell">{{$klacht->idklacht }}</td> 
                     <td class="klachtCell">{{$klacht->klacht_type}} </td>
                     <td class="klachtCell">{{$klacht->omschrijving }}</td>
                     <td class="klachtCell">{{$klacht->datum }}</td>
@@ -56,10 +55,48 @@
         @endif
     </table>
 
+        <br>
+        
+        <h3>✅ Opgeloste klachten</h3>
+        <table class="klacht-table">
+            <tr>
+                <th>ID</th>
+                <th>type</th>
+                <th>Omschrijving</th>
+                <th>Datum</th>
+                <th>locatie</th>
+                <th>Status</th>
+            </tr>
+
+            @if(isset($opgelosteKlachten) && $opgelosteKlachten->isEmpty())
+                <tr>
+                    <td colspan="6">Geen opgeloste klachten.</td>
+                </tr>
+            @else
+                @foreach($opgelosteKlachten ?? collect() as $oklacht)
+                    <tr class="klacht-row">
+                        <td class="klachtCell">{{ $oklacht->idklacht }}</td>
+                        <td class="klachtCell">{{ $oklacht->klacht_type }}</td>
+                        <td class="klachtCell">{{ $oklacht->omschrijving }}</td>
+                        <td class="klachtCell">{{ $oklacht->datum }}</td>
+                        <td class="klachtCell">
+                            <button class="view-on-map" data-loc="{{ $oklacht->locatie }}">
+                                {{ $oklacht->locatie }}
+                            </button>
+                        </td>
+                        <td class="klachtCell">Opgelost</td>
+                    </tr>
+                @endforeach
+            @endif
+    </table>
+
     </div>
+    
+
     <div id="map"></div>
        <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <script src="/js/map.js"></script>
 </div>
+
 </body>
 </html>

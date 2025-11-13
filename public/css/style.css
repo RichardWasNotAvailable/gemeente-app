@@ -126,22 +126,36 @@ input:focus,select:focus,textarea:focus{outline:3px solid rgba(11,94,215,0.12);o
 .submitButton{background:forestgreen;color:#fff;padding:10px;border-radius:10px}
 .signUpBox{background:lightgray;padding:1rem;border-radius:12px}
 
+.dashboard-body{
+    margin:2rem auto;
+    padding:1rem;
+}
 
 /* dashboard styles */
 .dashboard-container {
+    background-color: snow;
     display: flex; /* Use flexbox for layout */
 }
 
 .klacht-row {
-    border: 1px solid #ccc;
+    border: 1px solid gray;
+    background-color: snow;
     padding: 8px;
     width: 50%; /* Left half of the screen */
 }
 
 .klachtCell {
-    border: 1px solid #ccc;
+    border: 1px solid gray;
     padding: 8px;
 }
+
+.view-on-map{
+    width: 100%;
+    height: 100%;
+    background-color: white;
+    border-radius: 20px;
+}
+
 
 #map {
     width: 50%;  /* Right half of the screen */

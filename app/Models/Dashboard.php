@@ -23,9 +23,15 @@ class Dashboard extends Model
         ]);
     }
 
-    // Return the ID of a specific complaint
+    // Return the ID all unsolved complaints
     public static function returnKlachten()
     {
         return DB::table('klacht')->where('is_opgelost', false)->get();
+    }
+
+    // Return all solved complaints
+    public static function returnOpgelosteKlachten()
+    {
+        return DB::table('klacht')->where('is_opgelost', true)->get();
     }
 }
